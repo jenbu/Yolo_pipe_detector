@@ -8,7 +8,7 @@
     <arg name="yolo_config_path"           default="/home/nvidia/catkin_ws/src/Yolo_pipe_detector/darknet_ros/darknet_ros/yolo_network_config/cfg"/>
 
 
-    <arg name="network_param_file"         default="$(find Yolo_pipe_detector)/darknet_ros/darknet_ros/config/yolov3-tiny-2c.yaml"/>
+    <arg name="network_param_file"         default="~/catkin_ws/src/Yolo_pipe_detector/darknet_ros/darknet_ros/config/yolov3-tiny-2c.yaml"/>
     <rosparam command="load" ns="darknet_ros" file="$(arg network_param_file)"/>
 
 
