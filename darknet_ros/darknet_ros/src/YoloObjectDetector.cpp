@@ -92,22 +92,22 @@ namespace darknet_ros {
         std::string bbTopicName;
         std::string detectedImgTopicName;
 
+
+
         // Threshold of object detection.
         float thresh;
         nodeHandle_.param("yolo_model/threshold/value", thresh, (float) 0.3);
-        nodeHandle_.getParam("image_input", imageTopic);
-        nodeHandle_.getParam("bb_pub", bbTopicName);
-        nodeHandle_.getParam("detectedImage_pub", detectedImgTopicName);
+
         // Path to weights file.
         nodeHandle_.param("yolo_model/weight_file/name", weightsModel,
-                          std::string("yolov3-tiny-2c_10000.weights"));
+                          std::string("yolov2-tiny.weights"));
         nodeHandle_.param("weights_path", weightsPath, std::string("/default"));
         weightsPath += "/" + weightsModel;
         weights = new char[weightsPath.length() + 1];
         strcpy(weights, weightsPath.c_str());
 
         // Path to config file.
-        nodeHandle_.param("yolo_model/config_file/name", configModel, std::string("yolov3-tiny-2c.cfg"));
+        nodeHandle_.param("yolo_model/config_file/name", configModel, std::string("yolov2-tiny.cfg"));
         nodeHandle_.param("config_path", configPath, std::string("/default"));
         configPath += "/" + configModel;
         cfg = new char[configPath.length() + 1];
@@ -144,7 +144,7 @@ namespace darknet_ros {
         int detectionImageQueueSize;
         bool detectionImageLatch;
 
-        //nodeHandle_.param("subscribers/camera_reading/topic", imageTopic,
+        //nodeHandle_.param("subscribers/camera_reading/topic", cameraTopicName,
         //                  std::string("/camera/image_raw"));
         nodeHandle_.param("subscribers/camera_reading/queue_size", cameraQueueSize, 1);
         nodeHandle_.param("publishers/object_detector/topic", objectDetectorTopicName,
@@ -161,31 +161,25 @@ namespace darknet_ros {
         nodeHandle_.param("publishers/detection_image/latch", detectionImageLatch, true);
 
 
-        /*  message_filters::Subscriber<Image> image_color_sub(nodeHandle_, "/kinect2/qhd/image_color", 1);
-          message_filters::Subscriber<CameraInfo> info_color_sub(nodeHandle_, "/kinect2/qhd/camera_info", 1);
-
-
-          message_filters::TimeSynchronizer<Image, CameraInfo> sync(image_color_sub, info_color_sub, 10);
-          sync.registerCallback(boost::bind(&YoloObjectDetector::cameraCallback, this, _1, _2));*/
-
-
+        nodeHandle_.getParam("image_input", imageTopic);
+        nodeHandle_.getParam("bb_pub", bbTopicName);
+        nodeHandle_.getParam("detectedImage_pub", detectedImgTopicName);
 
         imageSubscriber_ = imageTransport_.subscribe(imageTopic, cameraQueueSize,
                                                      &YoloObjectDetector::cameraCallback, this);
-
         objectPublisher_ = nodeHandle_.advertise<std_msgs::Int8>(objectDetectorTopicName,
                                                                  objectDetectorQueueSize,
                                                                  objectDetectorLatch);
         boundingBoxesPublisher_ = nodeHandle_.advertise<darknet_ros_msgs_eb::BoundingBoxes>(
                 bbTopicName, boundingBoxesQueueSize, boundingBoxesLatch);
-        detectionImagePublisher_ = nodeHandle_.advertise<sensor_msgs::Image>(detectedImgTopicName,
+        detectionImagePublisher_ = nodeHandle_.advertise<sensor_msgs::Image>(detectionImageTopicName,
                                                                              detectionImageQueueSize,
                                                                              detectionImageLatch);
 
-        std::cout << detectionImageTopicName << std::endl;
+        std::cout << imageTopic << std::endl;
+
         // Action servers.
         std::string checkForObjectsActionName;
-
         nodeHandle_.param("actions/camera_reading/topic", checkForObjectsActionName,
                           std::string("check_for_objects"));
         checkForObjectsActionServer_.reset(
@@ -195,15 +189,11 @@ namespace darknet_ros {
         checkForObjectsActionServer_->registerPreemptCallback(
                 boost::bind(&YoloObjectDetector::checkForObjectsActionPreemptCB, this));
         checkForObjectsActionServer_->start();
-
-        ROS_INFO("%s\n", imageTopic.c_str());
-        //std::cout << imageTopic << std::endl;
     }
 
     void YoloObjectDetector::cameraCallback(const sensor_msgs::ImageConstPtr& msg)
     {
         ROS_DEBUG("[YoloObjectDetector] USB image received.");
-        ROS_INFO("Got image\n");
 
         cv_bridge::CvImagePtr cam_image;
 

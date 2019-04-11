@@ -1,7 +1,7 @@
 <launch>
     <machine name="jetson2" address="localhost" />
 
-
+    <!--
     <arg name="launch_prefix" default=""/>
 
     <arg name="yolo_weights_path"          default="/home/nvidia/catkin_ws/src/Yolo_pipe_detector/darknet_ros/darknet_ros/yolo_network_config/weights"/>
@@ -10,7 +10,16 @@
 
     <arg name="network_param_file"         default="/home/nvidia/catkin_ws/src/Yolo_pipe_detector/darknet_ros/darknet_ros/config/yolov3-tiny-2c.yaml"/>
     <rosparam command="load" ns="eb_darknet" file="$(arg network_param_file)"/>
+    -->
+    <arg name="launch_prefix" default=""/>
 
+    <!-- Config and weights folder. -->
+    <arg name="yolo_weights_path"          default="/home/nvidia/catkin_ws/src/Yolo_pipe_detector/darknet_ros/darknet_ros/yolo_network_config/weights"/>
+    <arg name="yolo_config_path"           default="/home/nvidia/catkin_ws/src/Yolo_pipe_detector/darknet_ros/darknet_ros/yolo_network_config/cfg"/>
+
+    <!-- ROS and network parameter files -->
+    <arg name="ros_param_file"             default="$(find eb_darknet)/config/ros.yaml"/>
+    <arg name="network_param_file"         default="$(find eb_darknet)/config/yolov3-tiny-2c.yaml"/>
 
     <node pkg="eb_darknet" type="eb_darknet" name="jetson2_eb_detector" output="screen" launch-prefix="$(arg launch_prefix)" machine="jetson2">
     <param name="weights_path"          value="$(arg yolo_weights_path)" />
