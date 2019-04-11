@@ -1,5 +1,5 @@
 <launch>
-    <machine name="jetson2" address="localhost" />
+    <machine name="jetson3" address="localhost" />
 
     <!--
     <arg name="launch_prefix" default=""/>
@@ -18,14 +18,14 @@
     <arg name="yolo_config_path"           default="/home/nvidia/catkin_ws/src/Yolo_pipe_detector/darknet_ros/darknet_ros/yolo_network_config/cfg"/>
 
     <!-- ROS and network parameter files -->
-    <arg name="ros_param_file"             default="$(find eb_darknet)/config/ros.yaml"/>
-    <arg name="network_param_file"         default="$(find eb_darknet)/config/yolov3-tiny-2c.yaml"/>
+    <arg name="ros_param_file"             default="/home/nvidia/catkin_ws/src/Yolo_pipe_detector/darknet_ros/darknet_ros/config/ros.yaml"/>
+    <arg name="network_param_file"         default="/home/nvidia/catkin_ws/src/Yolo_pipe_detector/darknet_ros/darknet_ros/config/yolov3-tiny-2c.yaml"/>
 
-    <node pkg="eb_darknet" type="eb_darknet" name="jetson2_eb_detector" output="screen" launch-prefix="$(arg launch_prefix)" machine="jetson2">
+    <node pkg="eb_darknet" type="eb_darknet" name="jetson2_eb_detector" output="screen" launch-prefix="$(arg launch_prefix)" machine="jetson3">
     <param name="weights_path"          value="$(arg yolo_weights_path)" />
     <param name="config_path"           value="$(arg yolo_config_path)" />
-    <param name="image_input" 			value="/jetson2/qhd/image_color"/>
-    <param name="bb_pub" 			    value="/jetson2/bounding_boxes"/>
-    <param name="detectedImage_pub" 	value="/jetson2/detection_image"/>
+    <param name="image_input" 			value="/jetson3/qhd/image_color"/>
+    <param name="bb_pub" 			    value="/jetson3/bounding_boxes"/>
+    <param name="detectedImage_pub" 	value="/jetson3/detection_image"/>
     </node>
 </launch>
