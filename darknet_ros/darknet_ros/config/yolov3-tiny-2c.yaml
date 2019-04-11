@@ -1,0 +1,12 @@
+yolo_model:
+
+  config_file:
+    name: yolov3-tiny-2c.cfg
+  weight_file:
+    name: yolov3-tiny-2c_10000.weights
+  threshold:
+    value: 0.3
+  detection_classes:
+    names:
+      - box-end
+      - pin-end
