@@ -21,7 +21,8 @@
 
     <!-- Load parameters -->
     <!--<rosparam command="load" ns="darknet_ros" file="$(arg ros_param_file)"/>-->
-    <rosparam command="load" ns="darknet_ros" file="$(arg network_param_file)"/>
+    <rosparam command="load" ns="jetson2_eb_darknet" file="$(arg network_param_file)"/>
+    <rosparam command="load" ns="jetson3_eb_darknet" file="$(arg network_param_file)"/>
 
     <!-- Start darknet and ros wrapper -->
     <node pkg="eb_darknet" type="eb_darknet" name="jetson2_eb_darknet" output="screen" launch-prefix="$(arg launch_prefix)" machine="jetson2">

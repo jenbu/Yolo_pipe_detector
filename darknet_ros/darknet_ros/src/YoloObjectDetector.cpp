@@ -172,7 +172,7 @@ namespace darknet_ros {
                                                                  objectDetectorLatch);
         boundingBoxesPublisher_ = nodeHandle_.advertise<darknet_ros_msgs_eb::BoundingBoxes>(
                 bbTopicName, boundingBoxesQueueSize, boundingBoxesLatch);
-        detectionImagePublisher_ = nodeHandle_.advertise<sensor_msgs::Image>(detectionImageTopicName,
+        detectionImagePublisher_ = nodeHandle_.advertise<sensor_msgs::Image>(detectedImgTopicName,
                                                                              detectionImageQueueSize,
                                                                              detectionImageLatch);
 
