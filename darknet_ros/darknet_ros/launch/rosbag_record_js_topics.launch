@@ -1,0 +1,10 @@
+
+<launch>
+
+    <node pkg="rosbag" type="record" name="jetson_detections"
+          args="record -o jetson_detections /jetson2/qhd/image_color /jetson2/sd/camera_info /jetson2/sd/image_depth /jetson2/bounding_boxes /jetson3/qhd/image_color /jetson3/sd/camera_info /jetson3/sd/image_depth /jetson3/bounding_boxes"
+    />
+
+</launch>
+
+<!-- rosbag record -o all_cameras /jetson1/qhd/image_color /jetson2/qhd/image_color /jetson3/qhd/image_color /jetson4/qhd/image_color /jetson5/qhd/image_color /jetson6/qhd/image_color
