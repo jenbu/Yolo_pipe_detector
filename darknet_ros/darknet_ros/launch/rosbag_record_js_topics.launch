@@ -2,7 +2,7 @@
 <launch>
 
     <node pkg="rosbag" type="record" name="jetson_detections"
-          args="record -o jetson_detections /jetson2/qhd/image_color /jetson2/sd/camera_info /jetson2/sd/image_depth /jetson2/bounding_boxes /jetson3/qhd/image_color /jetson3/sd/camera_info /jetson3/sd/image_depth /jetson3/bounding_boxes"
+          args="record -o jetson_data_29_04 /jetson1/qhd/image_color/compressed /jetson1/sd/camera_info /jetson1/sd/image_depth /jetson1/bounding_boxes /jetson2/qhd/image_color/compressed /jetson2/sd/camera_info /jetson2/sd/image_depth /jetson2/bounding_boxes /jetson3/qhd/image_color/compressed /jetson3/sd/camera_info /jetson3/sd/image_depth /jetson3/bounding_boxes /jetson4/qhd/image_color/compressed /jetson4/sd/camera_info /jetson4/sd/image_depth /jetson4/bounding_boxes /jetson5/qhd/image_color/compressed /jetson5/sd/camera_info /jetson5/sd/image_depth /jetson5/bounding_boxes /jetson6/qhd/image_color/compressed /jetson6/sd/camera_info /jetson6/sd/image_depth /jetson6/bounding_boxes"
     />
 
 </launch>
