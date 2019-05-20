@@ -19,7 +19,7 @@
 
     <!-- ROS and network parameter files -->
     <arg name="ros_param_file"             default="/home/nvidia/catkin_ws/src/yolo_eb/darknet_ros/darknet_ros/config/ros.yaml"/>
-    <arg name="network_param_file"         default="/home/nvidia/catkin_ws/src/yolo_eb/darknet_ros/darknet_ros/config/yolov3-tiny-2c-ground.yaml"/>
+    <arg name="network_param_file"         default="/home/nvidia/catkin_ws/src/yolo_eb/darknet_ros/darknet_ros/config/yolov3-tiny-2c.yaml"/>
 
     <rosparam command="load" ns="jetson3_eb_detector" file="$(arg network_param_file)"/>
 
